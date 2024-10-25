@@ -1,0 +1,40 @@
+---
+# svc-shop
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-notfound
+spec:
+  selector:
+    app: svc-notfound
+  ports:
+  - port: 80
+    targetPort: 80
+
+
+
+---
+# deploy-shop
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svc-notfound
+spec:
+  replicas: 3 
+  selector:
+    matchLabels:
+      app: svc-notfound
+  template:
+    metadata:
+      labels:
+        app: svc-notfound
+    spec:
+      containers:
+      - name: svc-notfound
+        image: blowswhl/portal:notfound
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 80
